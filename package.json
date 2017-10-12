@@ -35,7 +35,8 @@
     "react-router": "^3.0.5",
     "stylelint": "^8.0.0",
     "stylelint-config-standard": "^17.0.0",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "webpack": "3.5.5"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
