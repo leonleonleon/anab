@@ -64,6 +64,7 @@ const config = {
             {
                 'process.env' : {
                     'NODE_ENV' : JSON.stringify( 'production' ),
+                    'API_KEY'  : JSON.stringify( process.env.API_KEY ),
                 },
             }
         ),

@@ -4,7 +4,9 @@ import PropTypes            from 'prop-types';
 import SourceButton               from './SourceButton.jsx';
 import Headline               from './Headline.jsx';
 import { API_URL, MAX_QUESTIONS }             from 'config/app.json';
-import { API_KEY }             from 'config/apiKey.json';
+// import { API_KEY }             from 'config/apiKey.json';
+
+const API_KEY = process.env.API_KEY;
 
 /**
  *  App Component
@@ -248,6 +250,8 @@ export default class App extends React.Component {
      *  @return {JSX} app element plus children
      */
     render() {
+
+
         const { headlines, loaded, shuffled, current, sources, points, correct } = this.state;
 
         const total = headlines.length - 1;

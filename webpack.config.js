@@ -9,6 +9,7 @@ const DEV_PORT  = 8080;
 
 const extractCSS = new ExtractTextPlugin( 'css/app.css' );
 
+
 const config = {
     context : __dirname,
     entry   : [
@@ -84,6 +85,12 @@ const config = {
 
         new webpack.NamedModulesPlugin(),
         // prints more readable module names in the browser console on HMR updates
+
+        new webpack.DefinePlugin( {
+            'process.env' : {
+                API_KEY  : JSON.stringify( process.env.API_KEY ),
+            },
+        } ),
     ],
 };
 
