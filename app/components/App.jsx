@@ -8,9 +8,10 @@ import { API_KEY }             from 'config/apiKey.json';
 
 /**
  *  App Component
+ *
+ * @param {String} [source] source ID
  */
-export default class App extends React.Component
-{
+export default class App extends React.Component {
     static propTypes = {
         children    : PropTypes.oneOfType( [
             PropTypes.arrayOf( PropTypes.element ),
@@ -57,13 +58,10 @@ export default class App extends React.Component
 
     /**
      * fetchSource
-     *
-     * get all articles/headlines from source
-     *
-     * @param {string} [source] [input var]
+     *w
+     * @param {String} source
      */
-    fetchSource = ( source ) =>
-    {
+    fetchSource = ( source ) => {
         const myHeaders = new Headers( {
             'X-Api-Key' : API_KEY,
             'Host'      : 'https://newsapi.org',
@@ -80,16 +78,14 @@ export default class App extends React.Component
         fetch( `${API_URL}/articles?source=${source}`, myInit )
             .then( resp => resp.json() )
             .then(
-                resp =>
-                {
+                resp => {
                     const oldHeadlines = this.state.headlines;
                     const newHeadlines = resp.articles;
                     let counter = this.state.loaded;
 
                     counter += 1;
 
-                    for ( let i = 0; i <= newHeadlines.length - 1; i++ )
-                    {
+                    for ( let i = 0; i <= newHeadlines.length - 1; i++ ) {
                         oldHeadlines.push( {
                             title        : newHeadlines[ i ].title,
                             description  : newHeadlines[ i ].description,
@@ -111,12 +107,9 @@ export default class App extends React.Component
     /**
      * fetchSourceList
      *
-     * get all sources by language if no sources are set initially
-     *
-     * @parm [lang] string
+     * @param  {string} lang
      */
-    fetchSourceList = ( lang ) =>
-    {
+    fetchSourceList = ( lang ) => {
         const myHeaders = new Headers( {
             'X-Api-Key' : API_KEY,
             'Host'      : 'https://newsapi.org',
@@ -133,8 +126,7 @@ export default class App extends React.Component
         fetch( `${API_URL}/sources?language=${lang}`, myInit )
             .then( resp => resp.json() )
             .then(
-                resp =>
-                {
+                resp => {
                     const { sources } = resp;
 
                     const newState = {
@@ -150,15 +142,13 @@ export default class App extends React.Component
      * @param {array} array
      * @return {array} returns array
      */
-    shuffle = ( array ) =>
-    {
+    shuffle = ( array ) => {
         let currentIndex = array.length;
         let temporaryValue = 0;
         let randomIndex = 0;
 
         // While there remain elements to shuffle...
-        while ( 0 !== currentIndex )
-        {
+        while ( 0 !== currentIndex ) {
 
             // Pick a remaining element...
             randomIndex = Math.floor( Math.random() * currentIndex );
@@ -177,19 +167,15 @@ export default class App extends React.Component
      *
      * loads the settings from the settings server
      */
-    componentDidMount()
-    {
+    componentDidMount() {
         const { sources, lang, headlines } = this.state;
 
-        if ( sources.length === 0 )
-        {
+        if ( sources.length === 0 ) {
             this.fetchSourceList( lang );
         }
 
-        if ( sources.length > 0 && headlines.length === 0 )
-        {
-            sources.map( ( source ) =>
-            {
+        if ( sources.length > 0 && headlines.length === 0 ) {
+            sources.map( ( source ) => {
                 this.fetchSource( source.id );
             } );
         }
@@ -198,18 +184,15 @@ export default class App extends React.Component
     /**
      * componentDidUpdate
      */
-    componentWillUpdate()
-    {
+    componentWillUpdate() {
         const { headlines, loaded, sources, max } = this.state;
 
         const toLoad = sources.length - 1;
 
-        if ( loaded === toLoad )
-        {
+        if ( loaded === toLoad ) {
             const shuffledHeadlines = this.shuffle( headlines );
 
-            if ( shuffledHeadlines.length > max )
-            {
+            if ( shuffledHeadlines.length > max ) {
                 shuffledHeadlines.length = max;
             }
 
@@ -222,14 +205,11 @@ export default class App extends React.Component
     /**
      * componentDidUpdate
      */
-    componentDidUpdate()
-    {
+    componentDidUpdate() {
         const { sources, headlines } = this.state;
 
-        if ( sources.length > 0 && headlines.length === 0 )
-        {
-            sources.map( ( source ) =>
-            {
+        if ( sources.length > 0 && headlines.length === 0 ) {
+            sources.map( ( source ) => {
                 this.fetchSource( source.id );
             } );
         }
@@ -238,24 +218,20 @@ export default class App extends React.Component
      * checkAnswer
      *
      * check if Answer is correct
-     *
-     * @param ( correct ) bool
+     * @param {[bool]} correct
      */
-    checkAnswer = ( correct ) =>
-    {
+    checkAnswer = ( correct ) => {
         const { current, points } = this.state;
 
 
         let newPoints = points;
 
-        if ( correct )
-        {
+        if ( correct ) {
             newPoints += 1;
         }
 
         //hide buttons
-        if ( this.footerDiv != undefined )
-        {
+        if ( this.footerDiv != undefined ) {
             this.footerDiv.classList.add( 'hide' );
         }
 
@@ -271,14 +247,12 @@ export default class App extends React.Component
      *
      *  @return {JSX} app element plus children
      */
-    render()
-    {
+    render() {
         const { headlines, loaded, shuffled, current, sources, points, correct } = this.state;
 
         const total = headlines.length - 1;
 
-        if ( headlines === null || headlines === undefined || loaded === 0 || shuffled === false )
-        {
+        if ( headlines === null || headlines === undefined || loaded === 0 || shuffled === false ) {
             return (
                 <div className="wrapper">
                     <div className="headline">
@@ -291,8 +265,7 @@ export default class App extends React.Component
         const msg = correct === false ? 'wrong' : 'correct';
         let msgDiv = null;
 
-        if ( correct != null && current != total )
-        {
+        if ( correct != null && current != total ) {
             msgDiv =  <div
                 key={ `msg${current}` }
                 className="result"
@@ -301,15 +274,13 @@ export default class App extends React.Component
                 <span>{msg}</span>
             </div>;
 
-            setTimeout( () =>
-            {
+            setTimeout( () => {
                 this.msgBox.classList.add( 'hide' );
                 this.footerDiv.classList.remove( 'hide' );
             }, 1000 );
         }
 
-        if ( current === total )
-        {
+        if ( current === total ) {
             msgDiv =  <div
                 key={ `msg${current}` }
                 className="result"
@@ -318,8 +289,7 @@ export default class App extends React.Component
                 <span>{msg}</span>
             </div>;
 
-            setTimeout( () =>
-            {
+            setTimeout( () => {
                 this.msgBox.classList.add( 'hide' );
                 this.endDiv.classList.remove( 'hide' );
             }, 1000 );
@@ -339,8 +309,7 @@ export default class App extends React.Component
                     </div>
                     <div
                         className="replay"
-                        onClick={ () =>
-                        {
+                        onClick={ () => {
                             document.location.reload();
                         } }
                     >
@@ -368,8 +337,7 @@ export default class App extends React.Component
                     className="footer"
                     ref={ footerDiv => this.footerDiv = footerDiv }
                 >
-                    { sources.map( ( source, index ) =>
-                    {
+                    { sources.map( ( source, index ) => {
                         return <SourceButton
                             key={ index }
                             source={ source.id }

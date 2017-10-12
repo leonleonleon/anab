@@ -2,10 +2,11 @@ import React                from 'react';
 import PropTypes            from 'prop-types';
 
 /**
- *  SourceButton Component
+ * SourceButton Component
+ *
+ * @param {Event} event
  */
-export default class SourceButton extends React.Component
-{
+export default class SourceButton extends React.Component {
     state = {
         showSource : false,
     }
@@ -18,20 +19,16 @@ export default class SourceButton extends React.Component
     /**
      * handleClick
      *
-     * @param event {event} var
+     * @param {Event} event
      */
-    handleClick = ( event ) =>
-    {
+    handleClick = ( event ) => {
         event.preventDefault();
         event.stopPropagation();
         const { current, source } = this.props;
 
-        if ( current === source )
-        {
+        if ( current === source ) {
             this.props.checkAnswer( true );
-        }
-        else
-        {
+        } else {
             this.props.checkAnswer( false );
         }
     }
@@ -40,8 +37,7 @@ export default class SourceButton extends React.Component
      *
      *  @return {JSX} SourceButton element
      */
-    render()
-    {
+    render() {
         // const { showSource } = this.state;
         const { title } = this.props;
 
