@@ -96,29 +96,27 @@ a:active {
 
 .result {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 1rem;
+  left: 1rem;
   width: calc( 100vw - 2rem);
   height: calc( 100vh - 2rem);
   background-color: #333;
   color: #ddd;
-  transform: translate(-50%, -50%);
   display: flex;
-  justify-content: space-around; }
-  @media screen and (min-width: 668px) {
-    .result {
-      width: 75vw;
-      height: calc( 100% - 16rem); } }
-  .result span {
+  justify-content: space-around;
+  flex-direction: column; }
+  .result p {
     text-transform: uppercase;
     font-weight: bold;
     align-self: center;
     font-size: 3rem;
     line-height: 3rem; }
     @media screen and (min-width: 668px) {
-      .result span {
+      .result p {
         font-size: 6rem;
         line-height: 6rem; } }
+    .result p:last-of-type {
+      font-size: 1rem; }
 
 .end {
   font-size: 1.5rem;

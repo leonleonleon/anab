@@ -1,4 +1,5 @@
 {
     "API_URL"           : "https://newsapi.org/v1",
-    "MAX_QUESTIONS"     : 10
+    "MAX_QUESTIONS"     : 10,
+    "RESULT_LENGTH"     : 1500
 }

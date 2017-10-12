@@ -3,7 +3,7 @@ import React                from 'react';
 import PropTypes            from 'prop-types';
 import SourceButton               from './SourceButton.jsx';
 import Headline               from './Headline.jsx';
-import { API_URL, MAX_QUESTIONS }             from 'config/app.json';
+import { API_URL, MAX_QUESTIONS, RESULT_LENGTH }             from 'config/app.json';
 // import { API_KEY }             from 'config/apiKey.json';
 
 const API_KEY = process.env.API_KEY;
@@ -53,6 +53,7 @@ export default class App extends React.Component {
         shuffled     : false,
         points       : 0,
         correct      : null,
+        correctName  : null,
         max          : MAX_QUESTIONS,
         lang         : 'en',
     };
@@ -249,7 +250,7 @@ export default class App extends React.Component {
      * @param {[bool]} correct
      */
     checkAnswer = ( correct ) => {
-        const { current, points } = this.state;
+        const { current, points, headlines, sources } = this.state;
 
 
         let newPoints = points;
@@ -263,10 +264,17 @@ export default class App extends React.Component {
             this.footerDiv.classList.add( 'hide' );
         }
 
+        const correctSource = sources.filter( ( item ) => {
+            if ( item.id === headlines[ current ].source ) {
+                return item;
+            }
+        } );
+
         this.setState( {
-            current : current + 1,
-            points  : newPoints,
-            correct : correct,
+            current     : current + 1,
+            points      : newPoints,
+            correct     : correct,
+            correctName : correctSource[ 0 ].name,
         } );
     }
 
@@ -278,7 +286,15 @@ export default class App extends React.Component {
     render() {
 
 
-        const { headlines, loaded, shuffled, current, sources, points, correct } = this.state;
+        const {
+            headlines,
+            loaded,
+            shuffled,
+            current,
+            sources,
+            points,
+            correct,
+            correctName } = this.state;
 
         const total = headlines.length - 1;
 
@@ -301,13 +317,14 @@ export default class App extends React.Component {
                 className="result"
                 ref={ msgBox => this.msgBox = msgBox }
             >
-                <span>{msg}</span>
+                <p>{msg}</p>
+                <p>It was {correctName}</p>
             </div>;
 
             setTimeout( () => {
                 this.msgBox.classList.add( 'hide' );
                 this.footerDiv.classList.remove( 'hide' );
-            }, 1000 );
+            }, RESULT_LENGTH );
         }
 
         if ( current === total ) {
@@ -316,13 +333,14 @@ export default class App extends React.Component {
                 className="result"
                 ref={ msgBox => this.msgBox = msgBox }
             >
-                <span>{msg}</span>
+                <p>{msg}</p>
+                <p>It was {correctName}</p>
             </div>;
 
             setTimeout( () => {
                 this.msgBox.classList.add( 'hide' );
                 this.endDiv.classList.remove( 'hide' );
-            }, 1000 );
+            }, RESULT_LENGTH );
 
 
             return (
