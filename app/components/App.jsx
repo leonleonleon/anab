@@ -11,7 +11,6 @@ const API_KEY = process.env.API_KEY;
 /**
  *  App Component
  *
- * @param {String} [source] source ID
  */
 export default class App extends React.Component {
     static propTypes = {
@@ -22,7 +21,7 @@ export default class App extends React.Component {
         params      : PropTypes.object,
         location    : PropTypes.object,
         history     : PropTypes.object,
-    }
+    };
 
 
     state = {
@@ -56,11 +55,11 @@ export default class App extends React.Component {
         correct      : null,
         max          : MAX_QUESTIONS,
         lang         : 'en',
-    }
+    };
 
     /**
      * fetchSource
-     *w
+     *
      * @param {String} source
      */
     fetchSource = ( source ) => {

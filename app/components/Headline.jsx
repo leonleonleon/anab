@@ -4,7 +4,6 @@ import PropTypes            from 'prop-types';
 /**
  *  Headline Component
  *
- * @param {Event} [mouseEvent] dasjda
  */
 export default class Headline extends React.Component {
 

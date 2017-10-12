@@ -4,7 +4,7 @@ import {
     Router,
     Route,
     browserHistory,
-    }        from 'react-router';
+}        from 'react-router';
 import 'whatwg-fetch';
 import App              from 'components/App.jsx';
 
@@ -20,4 +20,4 @@ render(
             history={ browserHistory }
         />
     </Router>
-, document.getElementById( 'app' ) );
+    , document.getElementById( 'app' ) );
