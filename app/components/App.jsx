@@ -183,6 +183,42 @@ export default class App extends React.Component {
 
     }
     /**
+     * processHeadlines
+     *
+     * @param {array} headlines
+     * @param {integer} max
+     * @param {array} sources
+     */
+    processHeadlines = ( headlines, max, sources ) => {
+
+        const newHeadlines = [];
+
+        for ( let i = 0; i < headlines.length; i++ ) {
+
+            const { title, description, source } = headlines[ i ];
+
+            const filter = sources.filter( ( item ) => {
+                if ( item.id === source ) {
+                    return item.name;
+                }
+            } );
+
+            if ( !title.includes( filter.name ) && !description.includes( filter.name ) ) {
+                newHeadlines.push( headlines[ i ] );
+            }
+        }
+        const shuffledHeadlines = this.shuffle( newHeadlines );
+
+        if ( shuffledHeadlines.length > max ) {
+            shuffledHeadlines.length = max;
+        }
+
+        this.setState( {
+            headlines : shuffledHeadlines,
+            shuffled  : true,
+        } );
+    }
+    /**
      * componentDidUpdate
      */
     componentWillUpdate() {
@@ -191,16 +227,7 @@ export default class App extends React.Component {
         const toLoad = sources.length - 1;
 
         if ( loaded === toLoad ) {
-            const shuffledHeadlines = this.shuffle( headlines );
-
-            if ( shuffledHeadlines.length > max ) {
-                shuffledHeadlines.length = max;
-            }
-
-            this.setState( {
-                headlines : shuffledHeadlines,
-                shuffled  : true,
-            } );
+            this.processHeadlines( headlines, max, sources );
         }
     }
     /**
