@@ -8,7 +8,7 @@
     "start": "node ./server/server.js",
     "build": "npm run test && NODE_ENV=production webpack --config ./webpack.config.prod.js",
     "dev": "webpack-dev-server && --progress && ./.env",
-    "test": "npm run test ./app/** --ext .jsx --ext .js"
+    "test": "eslint ./app/** --ext .jsx --ext .js"
   },
   "repository": {
     "type": "git",
